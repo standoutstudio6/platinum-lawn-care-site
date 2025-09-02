@@ -1,0 +1,445 @@
+<!doctype html>
+<!--
+PROJECT STRUCTURE (recommended)
+platinum-lawn-care/
+├─ index.html            # main page
+├─ thanks.html           # optional: custom thank-you page (after form submit)
+└─ images/               # all images live here
+   ├─ hero-bg.jpg
+   ├─ mowing.jpg
+   ├─ mulch.jpg
+   ├─ aeration.jpg
+   ├─ hedge.jpg
+   ├─ cleanup.jpg
+   ├─ pavers.jpg
+   ├─ gallery1.jpg … gallery6.jpg
+   ├─ og.jpg             # social share image (1200x630)
+   └─ favicon.svg        # site icon (or .png)
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Platinum Lawn Care LLC | Lawn & Landscape in Minnesota</title>
+  <meta name="description" content="Platinum Lawn Care LLC — Reliable lawn mowing, edging, mulch, clean-ups, aeration, and hardscapes in MN. Free same-day estimates. Call (320) 630-1024." />
+  <meta property="og:title" content="Platinum Lawn Care LLC" />
+  <meta property="og:description" content="Reliable lawn & landscape service in Minnesota. Free same-day estimates. Call (320) 630-1024." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og.jpg" />
+  <meta name="theme-color" content="#114b2b" />
+  <link rel="icon" href="images/favicon.svg" />
+  <style>
+    :root{
+      --brand:#1a6e3b; --brand-2:#0f4224; --brand-3:#f0f7f3; --ink:#0b1f16;
+      --muted:#53665c; --accent:#e0ffcf; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.12)
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;display:block;border-radius:var(--radius)}
+
+    /* Header */
+    .topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e7eee9}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:68px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand-2)}
+    .brand svg{width:28px;height:28px}
+    .navlinks{display:flex;gap:18px;align-items:center}
+    .navlinks a{font-weight:600;color:#16442a}
+    .cta{background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;box-shadow:var(--shadow)}
+    .burger{display:none;background:transparent;border:0}
+    @media (max-width:860px){
+      .navlinks{display:none}
+      .burger{display:block}
+      .drawer{position:fixed;inset:0 0 0 auto;width:min(320px,85%);background:#fff;border-left:1px solid #e5efe7;transform:translateX(100%);transition:.3s;display:flex;flex-direction:column;padding:20px;gap:12px}
+      .drawer.open{transform:translateX(0)}
+      .drawer a{padding:10px 6px;border-radius:8px}
+      .drawer .cta{display:inline-block}
+    }
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg,rgba(26,110,59,.35),rgba(26,110,59,.65)),url('images/hero-bg.jpg') center/cover no-repeat;color:#fff}
+    .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;padding:60px 20px}
+    .hero-card{background:#ffffffe6;color:#10321f;border-radius:16px;padding:18px;box-shadow:var(--shadow);backdrop-filter: blur(6px)}
+    .badge{display:inline-block;background:#fff;color:var(--brand-2);padding:6px 10px;border-radius:999px;font-size:.85rem;border:1px solid #cfe7d9}
+    .h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:12px 0 6px;font-weight:900}
+    .hero p{margin:6px 0 18px;color:#123a24}
+    .quick{display:flex;flex-wrap:wrap;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;font-weight:700;border:1px solid #cfe7d9;background:#fff;color:#123a24}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+    /* Sections */
+    section{padding:48px 0}
+    h2{font-size:clamp(22px,3vw,34px);margin:0 0 14px}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:18px}
+    @media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
+
+    /* Cards */
+    .card{border:1px solid #e0eee6;border-radius:14px;padding:16px;background:#fff;box-shadow:0 2px 8px rgba(15,66,36,.05)}
+    .card h3{margin:6px 0 8px}
+
+    /* Gallery */
+    .gallery img{aspect-ratio: 4 / 3;object-fit:cover}
+
+    /* Testimonials */
+    .slider{position:relative}
+    .slides{display:flex;overflow:hidden;border-radius:14px}
+    .slide{min-width:100%;padding:24px;background:var(--brand-3)}
+    .dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .dot{width:10px;height:10px;border-radius:50%;background:#cbdacf;border:0}
+    .dot.active{background:var(--brand)}
+
+    /* Forms */
+    .form{display:grid;gap:12px}
+    .form input,.form select,.form textarea{padding:12px 14px;border:1px solid #d8e8df;border-radius:12px;font:inherit}
+    .form small{color:var(--muted)}
+    .two{display:grid;gap:12px}
+    @media(min-width:680px){.two{grid-template-columns:1fr 1fr}}
+
+    /* FAQ */
+    details{border:1px solid #e0eee6;border-radius:12px;padding:12px}
+    summary{cursor:pointer;font-weight:700}
+
+    /* Footer */
+    footer{background:#0e3920;color:#cfe7d9;padding:28px 0}
+    footer a{color:#e6ffee}
+
+    /* Utilities */
+    .pill{display:inline-flex;gap:6px;align-items:center;background:#ecfff3;color:#0d3c22;border:1px solid #cfe7d9;border-radius:999px;padding:6px 10px;font-weight:700}
+    .stack{display:flex;flex-wrap:wrap;gap:10px}
+    .note{background:#f7fbf9;border:1px dashed #cde3d6;padding:10px;border-radius:12px}
+
+    /* Floating actions */
+    .fab{position:fixed;right:14px;bottom:14px;display:flex;flex-direction:column;gap:10px;z-index:40}
+    .fab a{box-shadow:var(--shadow)}
+  </style>
+</head>
+<body>
+  <!-- JSON-LD LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Platinum Lawn Care LLC",
+    "image":"images/og.jpg",
+    "telephone":"+13206301024",
+    "email":"PlatinumLawnCareMN@outlook.com",
+    "areaServed":"Minnesota",
+    "url":"",
+    "priceRange":"$",
+    "sameAs":["https://www.facebook.com/PlatinumLawnCareMN/"]
+  }
+  </script>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="Platinum Lawn Care LLC home">
+        <svg viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M128 5c31 40 57 77 86 109c-24 38-52 72-86 108C97 186 69 152 42 114C72 81 97 46 128 5z" fill="currentColor"/></svg>
+        <span>Platinum Lawn Care LLC</span>
+      </a>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="cta">Get Free Quote</a>
+      </nav>
+      <button class="burger" aria-label="Open menu" onclick="document.querySelector('.drawer').classList.add('open')">☰</button>
+    </div>
+  </div>
+  <div class="drawer" aria-hidden="true">
+    <button class="btn" onclick="this.parentElement.classList.remove('open')">✕ Close</button>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="cta">Get Free Quote</a>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero" id="home" role="banner">
+    <div class="wrap">
+      <div>
+        <span class="badge">Licensed • Insured • Local</span>
+        <h1 class="h1">Lawn Care & Landscaping You Can Trust</h1>
+        <p>Reliable mowing, edging, mulch, seasonal clean-ups, aeration, and hardscapes. Fast, friendly, and affordable in Minnesota.</p>
+        <div class="quick">
+          <a class="btn primary" href="#contact">Get a Free Quote</a>
+          <a class="btn" href="tel:+13206301024">📞 (320) 630-1024</a>
+          <a class="btn" href="sms:+13206301024?body=Hi%20Platinum%20Lawn%20Care%2C%20I%27d%20like%20a%20quote.">💬 Text Us</a>
+        </div>
+        <div class="stack" style="margin-top:12px">
+          <span class="pill">✅ Same-day quotes</span>
+          <span class="pill">🕒 On-time service</span>
+          <span class="pill">🌱 Satisfaction guaranteed</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <strong>Quick Estimate</strong>
+        <p class="muted">Send us a note — we'll reply ASAP.</p>
+        <!-- FormSubmit: sends directly to the business email -->
+        <form class="form" action="https://formsubmit.co/PlatinumLawnCareMN@outlook.com" method="POST">
+          <input type="hidden" name="_subject" value="New Quote Request — Website" />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_template" value="table" />
+          <!-- Optional: Set your deployed URL below to enable thank-you redirect -->
+          <input type="hidden" name="_next" value="" />
+
+          <div class="two">
+            <input name="name" required placeholder="Full name" />
+            <input type="tel" name="phone" required placeholder="Phone" />
+          </div>
+          <input type="email" name="email" required placeholder="Email" />
+          <select name="service" required>
+            <option value="" disabled selected>Choose a service</option>
+            <option>Mowing & Edging</option>
+            <option>Spring / Fall Clean-Up</option>
+            <option>Mulch & Rock</option>
+            <option>Aeration / Dethatching</option>
+            <option>Hedge & Shrub Trimming</option>
+            <option>Hardscapes / Pavers</option>
+            <option>Other</option>
+          </select>
+          <textarea name="message" rows="3" placeholder="Tell us about your yard and timeline"></textarea>
+          <label class="note"><input type="checkbox" name="call_back" /> Please call me back ASAP</label>
+          <button class="btn primary" type="submit">Send Request</button>
+          <small>Or email: <a href="mailto:PlatinumLawnCareMN@outlook.com">PlatinumLawnCareMN@outlook.com</a></small>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <h2>Services</h2>
+      <p class="muted">Everything your lawn and landscape need, done right the first time.</p>
+      <div class="grid cols-3">
+        <article class="card">
+          <img src="images/mowing.jpg" alt="Freshly striped lawn" loading="lazy" />
+          <h3>Mowing & Edging</h3>
+          <p>Pro stripe patterns, sharp edges, and a clean finish every visit.</p>
+        </article>
+        <article class="card">
+          <img src="images/mulch.jpg" alt="Mulch install" loading="lazy" />
+          <h3>Mulch & Rock</h3>
+          <p>Refresh beds with premium mulch or decorative rock and weed barrier.</p>
+        </article>
+        <article class="card">
+          <img src="images/aeration.jpg" alt="Core aeration" loading="lazy" />
+          <h3>Aeration & Dethatching</h3>
+          <p>Boost root health and water absorption for a greener lawn.</p>
+        </article>
+        <article class="card">
+          <img src="images/hedge.jpg" alt="Hedge trimming" loading="lazy" />
+          <h3>Hedge & Shrub Care</h3>
+          <p>Clean cuts, shaping, and seasonal pruning for healthy hedges.</p>
+        </article>
+        <article class="card">
+          <img src="images/cleanup.jpg" alt="Yard clean up" loading="lazy" />
+          <h3>Spring / Fall Clean-Ups</h3>
+          <p>Leaves, sticks, and debris removed — curb appeal restored.</p>
+        </article>
+        <article class="card">
+          <img src="images/pavers.jpg" alt="Paver patio" loading="lazy" />
+          <h3>Hardscapes & Pavers</h3>
+          <p>Walkways, patios, and borders that look great and last.</p>
+        </article>
+      </div>
+      <div class="note" style="margin-top:14px">Don’t see your project listed? <a href="#contact">Ask us</a> — we do custom work.</div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" aria-label="Project gallery">
+    <div class="wrap">
+      <h2>Recent Projects</h2>
+      <p class="muted">A few before & afters from our crews.</p>
+      <div class="grid cols-3 gallery">
+        <img src="images/gallery1.jpg" alt="Front yard upgrade" loading="lazy" />
+        <img src="images/gallery2.jpg" alt="Edging work" loading="lazy" />
+        <img src="images/gallery3.jpg" alt="Fresh mulch beds" loading="lazy" />
+        <img src="images/gallery4.jpg" alt="Paver walkway" loading="lazy" />
+        <img src="images/gallery5.jpg" alt="Hedge trimming" loading="lazy" />
+        <img src="images/gallery6.jpg" alt="Patio build" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="wrap">
+      <h2>Happy Customers</h2>
+      <div class="slider">
+        <div class="slides" id="slides">
+          <div class="slide">
+            <strong>“The lawn stripes are insane!”</strong>
+            <p class="muted">Showed up on time and made our lawn look better than ever. Highly recommend.</p>
+            <p>— Sarah K.</p>
+          </div>
+          <div class="slide">
+            <strong>“Clean, fast, and affordable.”</strong>
+            <p class="muted">They handled spring clean-up and mulch in one day. Fantastic crew.</p>
+            <p>— Matt R.</p>
+          </div>
+          <div class="slide">
+            <strong>“Our new paver path looks amazing.”</strong>
+            <p class="muted">Great design suggestions and quality work. We love it.</p>
+            <p>— Dana P.</p>
+          </div>
+        </div>
+        <div class="dots" id="dots" aria-label="Select testimonial"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service area + Map -->
+  <section id="area">
+    <div class="wrap grid cols-2">
+      <div>
+        <h2>Service Area</h2>
+        <p class="muted">We proudly serve Minnesota and nearby communities. Not sure if you’re in range? <a href="#contact">Ask us</a>.</p>
+        <ul>
+          <li>Weekly & bi-weekly mowing routes</li>
+          <li>On-demand clean-ups and projects</li>
+          <li>Commercial & residential</li>
+        </ul>
+        <div class="stack" style="margin-top:10px">
+          <span class="pill">🧾 Free quotes</span>
+          <span class="pill">📸 Photo updates</span>
+          <span class="pill">💳 Card & cash accepted</span>
+        </div>
+      </div>
+      <iframe title="Map to Platinum Lawn Care" style="width:100%;height:320px;border:0;border-radius:14px" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Platinum%20Lawn%20Care%20Minnesota&output=embed"></iframe>
+    </div>
+  </section>
+
+  <!-- Contact / Quote -->
+  <section id="contact" aria-label="Contact form">
+    <div class="wrap grid cols-2">
+      <div>
+        <h2>Get a Free Quote</h2>
+        <p class="muted">Tell us about your project. We’ll reply quickly with next steps.</p>
+        <form class="form" action="https://formsubmit.co/PlatinumLawnCareMN@outlook.com" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" value="New Website Quote Request" />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_autoresponse" value="Thanks for contacting Platinum Lawn Care! We received your request and will reach out shortly." />
+          <!-- Optional: Set your deployed URL below to enable thank-you redirect -->
+          <input type="hidden" name="_next" value="" />
+
+          <div class="two">
+            <input name="name" required placeholder="Full name" />
+            <input type="tel" name="phone" required placeholder="Phone" />
+          </div>
+          <div class="two">
+            <input type="email" name="email" required placeholder="Email" />
+            <input name="address" placeholder="Address (optional)" />
+          </div>
+          <select name="service" required>
+            <option value="" disabled selected>Choose a service</option>
+            <option>Mowing & Edging</option>
+            <option>Spring / Fall Clean-Up</option>
+            <option>Mulch & Rock</option>
+            <option>Aeration / Dethatching</option>
+            <option>Hedge & Shrub Trimming</option>
+            <option>Hardscapes / Pavers</option>
+            <option>Other</option>
+          </select>
+          <textarea name="details" rows="5" placeholder="Describe your yard and what you’d like done"></textarea>
+          <label class="note">Add photos (optional): <input type="file" name="attachments" multiple accept="image/*" /></label>
+          <button class="btn primary" type="submit">Send Message</button>
+          <small>Prefer email? <a href="mailto:PlatinumLawnCareMN@outlook.com?subject=Quote%20Request">PlatinumLawnCareMN@outlook.com</a></small>
+        </form>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Contact</h3>
+          <p><strong>Phone:</strong> <a href="tel:+13206301024">(320) 630-1024</a><br/>
+             <strong>Email:</strong> <a href="mailto:PlatinumLawnCareMN@outlook.com">PlatinumLawnCareMN@outlook.com</a><br/>
+             <strong>Facebook:</strong> <a href="https://www.facebook.com/PlatinumLawnCareMN/" target="_blank" rel="noopener">@PlatinumLawnCareMN</a></p>
+          <p><strong>Hours:</strong> Mon–Sat 8am–6pm • Sun Closed</p>
+          <div class="stack">
+            <a class="btn" href="https://www.google.com/maps?q=Platinum%20Lawn%20Care%20Minnesota" target="_blank" rel="noopener">📍 Get Directions</a>
+            <a class="btn" href="sms:+13206301024?body=Hi%20Platinum%20Lawn%20Care%2C%20I%27d%20like%20a%20quote.">💬 Text Us</a>
+            <a class="btn" href="tel:+13206301024">📞 Call Now</a>
+          </div>
+        </div>
+        <div class="note" style="margin-top:12px">
+          Tip: After you publish this site, add your URL to the <em>_next</em> fields in the forms above to show a custom thank-you page.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <h2>FAQ</h2>
+      <div class="grid cols-2">
+        <details>
+          <summary>How fast can I get a quote?</summary>
+          <p>Most quotes are same-day. Message us and we’ll take it from there.</p>
+        </details>
+        <details>
+          <summary>Do you offer recurring mowing?</summary>
+          <p>Yes — weekly or bi-weekly routes during the season.</p>
+        </details>
+        <details>
+          <summary>Are you insured?</summary>
+          <p>Yes. We’ll gladly provide proof on request.</p>
+        </details>
+        <details>
+          <summary>What forms of payment do you accept?</summary>
+          <p>Cash, card, or invoice — whatever’s easiest for you.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="wrap grid cols-2">
+      <div>
+        <strong>Platinum Lawn Care LLC</strong>
+        <p>Reliable lawn & landscape in Minnesota.</p>
+        <p>📞 <a href="tel:+13206301024">(320) 630-1024</a> • ✉️ <a href="mailto:PlatinumLawnCareMN@outlook.com">PlatinumLawnCareMN@outlook.com</a></p>
+      </div>
+      <div>
+        <p><a href="#home">Back to top ↑</a></p>
+        <small class="muted">© <span id="year"></span> Platinum Lawn Care LLC. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating quick actions -->
+  <div class="fab" aria-label="Quick actions">
+    <a class="btn primary" href="tel:+13206301024">📞 Call</a>
+    <a class="btn" href="#contact">💬 Quote</a>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple testimonial slider
+    const slides = document.getElementById('slides');
+    const dots = document.getElementById('dots');
+    const total = slides.children.length;
+    let i = 0;
+    for (let j=0;j<total;j++){ const b=document.createElement('button'); b.className='dot'+(j===0?' active':''); b.setAttribute('aria-label','Go to slide '+(j+1)); b.onclick=()=>go(j); dots.appendChild(b);}    
+    function go(n){ i=n; slides.style.transform = `translateX(-${i*100}%)`; [...dots.children].forEach((d,k)=>d.classList.toggle('active',k===i)); }
+    setInterval(()=>go((i+1)%total), 4800);
+
+    // Accessibility: close drawer on ESC or link click
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelector('.drawer').classList.remove('open') })
+    document.querySelectorAll('.drawer a').forEach(a=>a.addEventListener('click', ()=>document.querySelector('.drawer').classList.remove('open')))
+
+    // Optional: Google Analytics (replace G-XXXXXX)
+    // window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XXXXXX');
+  </script>
+</body>
+</html>
